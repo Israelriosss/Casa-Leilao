@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -140,17 +143,32 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        ProdutosDTO produto = new ProdutosDTO();
-        String nome = cadastroNome.getText();
-        String valor = cadastroValor.getText();
-        String status = "A Venda";
+// Cria um novo objeto DTO e preenche os dados com base nos campos da tela
+    ProdutosDTO produto = new ProdutosDTO();
+    String nome = cadastroNome.getText();
+    String valorTexto = cadastroValor.getText();
+    
+    // Verifica se o campo de valor é um número válido
+    try {
+        int valor = Integer.parseInt(valorTexto);
         produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
-        
+        produto.setValor(valor);
+        produto.setStatus("A Venda"); // status padrão
+
+        // Instancia a classe DAO e chama o método para cadastrar
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);
+
+        // Mensagem de sucesso (opcional)
+        JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
         
+        // Limpar campos (opcional)
+        cadastroNome.setText("");
+        cadastroValor.setText("");
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Digite um valor numérico válido para o campo 'Valor'");
+    }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
