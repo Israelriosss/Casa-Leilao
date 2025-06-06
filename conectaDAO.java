@@ -1,33 +1,25 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Adm
- */
 public class conectaDAO {
-    
-    public Connection connectDB(){
-        Connection conn = null;
-        
+
+    // Variáveis para configurar o banco de dados
+    private static final String URL = "jdbc:mysql://localhost:3306/cenaflix"; // Substitua "nomedobanco"
+    private static final String USER = "root"; // Substitua se o usuário for diferente
+    private static final String PASSWORD = "jesusefiel123"; // Substitua pela senha correta, se tiver
+
+    // Método para retornar a conexão
+    public static Connection conectar() {
         try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
-            
-        } catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Carrega o driver JDBC
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver JDBC não encontrado: " + e.getMessage());
+            return null;
+        } catch (SQLException e) {
+            System.out.println("Erro ao conectar com o banco de dados: " + e.getMessage());
+            return null;
         }
-        return conn;
     }
-    
 }
